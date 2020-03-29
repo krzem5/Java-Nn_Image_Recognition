@@ -1,0 +1,6 @@
+### Github File Push Ignore
+
+**/*.class
+*.txt
+!end.txt
+data/*.nn-data
