@@ -93,7 +93,7 @@ public class NeuralNetwork{
 				// g[j]=Math.max(ol[i+1][j]*ol[i+1][j],this.lr)*e[j]*this.lr;
 				this.bl[i][j]+=g[j];
 			}
- 			for (int j=0;j<this.wl[i].length;j++){
+			for (int j=0;j<this.wl[i].length;j++){
 				for (int k=0;k<this.wl[i][0].length;k++){
 					this.wl[i][j][k]+=g[k]*ol[i][j];
 				}
