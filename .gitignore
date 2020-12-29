@@ -2,5 +2,6 @@
 
 **/*.class
 *.txt
+mnist
 !end.txt
 data/*.nn-data
