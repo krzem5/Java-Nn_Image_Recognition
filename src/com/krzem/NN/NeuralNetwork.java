@@ -239,7 +239,7 @@ public class NeuralNetwork{
 		BufferedWriter ow=null;
 		double s=0;
 		try{
-			// ow=new BufferedWriter(new FileWriter("./acc-errors.txt"));
+			ow=new BufferedWriter(new FileWriter("./acc-errors.txt"));
 			for (int k=0;k<d.length;k++){
 				double[] o=this.predict(d[k][0]);
 				double mx=-Double.MAX_VALUE;
@@ -258,15 +258,15 @@ public class NeuralNetwork{
 				}
 				if (bi==oi){
 					s++;
-					// ow.write(String.format("[%d] %s == %s\n",k,java.util.Arrays.toString(o),java.util.Arrays.toString(d[k][1])));
-					// ow.flush();
+					ow.write(String.format("[%d] %s == %s\n",k,java.util.Arrays.toString(o),java.util.Arrays.toString(d[k][1])));
+					ow.flush();
 				}
 				else{
-					// ow.write(String.format("=> [%d] %s == %s\n",k,java.util.Arrays.toString(o),java.util.Arrays.toString(d[k][1])));
-					// ow.flush();
+					ow.write(String.format("=> [%d] %s == %s\n",k,java.util.Arrays.toString(o),java.util.Arrays.toString(d[k][1])));
+					ow.flush();
 				}
 			}
-			// ow.close();
+			ow.close();
 		}
 		catch (Exception e){
 			e.printStackTrace();
@@ -309,7 +309,7 @@ public class NeuralNetwork{
 					}
 					nn=new NeuralNetwork(i,h,o,lr);
 				}
-				else if (s==1&&!l.equals("")){
+				else if (s==1&&l.length()>0){
 					int mw=Integer.parseInt(l.split(":")[0].split("x")[0]);
 					int mh=Integer.parseInt(l.split(":")[0].split("x")[1]);
 					nn.wl[wi]=new double[mh][mw];
@@ -356,7 +356,7 @@ public class NeuralNetwork{
 				if (s==0){
 					s=1;
 				}
-				else if (l.equals("")){
+				else if (l.length()==0){
 					s=2;
 				}
 			}
@@ -373,15 +373,15 @@ public class NeuralNetwork{
 
 	private boolean _check_hash(String f){
 		try{
-			MessageDigest md5=MessageDigest.getInstance("MD5");
+			MessageDigest sha256=MessageDigest.getInstance("SHA256");
 			byte[] b=new byte[4096];
 			BufferedInputStream is=new BufferedInputStream(new FileInputStream(f));
 			int idx=0;
 			while ((idx=is.read(b))>0){
-				md5.update(b,0,idx);
+				sha256.update(b,0,idx);
 			}
 			is.close();
-			String h=new BigInteger(1,md5.digest()).toString(16);
+			String h=new BigInteger(1,sha256.digest()).toString(16);
 			while (h.length()<32){
 				h="0"+h;
 			}
